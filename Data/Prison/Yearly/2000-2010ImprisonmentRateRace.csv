@@ -1,0 +1,28 @@
+Bureau of Justice Statistics,,,,,,,,
+Filename: p10at14.csv,,,,,,,,
+"Appendix Table 14. Estimated rate of sentenced prisoners under state and federal jurisdiction, per 100,000 U.S. residents, by sex, race, and Hispanic origin, December 31, 2000-2010",,,,,,,,
+Report title: Prisoners in 2010 NCJ 236096,,,,,,,,
+Data source(s): National Prisoner Statistics Program,,,,,,,,
+"Author(s): Paul Guerino, Paige M. Harrison, and William J. Sabol",,,,,,,,
+Refer questions to: askbjs@usdoj.gov or 202-307-0765 ,,,,,,,,
+Date of version: 01/10/2012,,,,,,,,
+,,,,,,,,
+"Appendix Table 14. Estimated rate of sentenced prisoners under state and federal jurisdiction, per 100,000 U.S. residents, by sex, race, and Hispanic origin, December 31, 2000-2010",,,,,,,,
+,Male,,,,Female,,,
+Year,Total/a,White/b,Black/b,Hispanic,Total/a,White/b,Black/b,Hispanic
+2000,904,449,"3,457","1,220",59,34,205,60
+2001,896,462,"3,535","1,177",58,36,199,61
+2002,912,450,"3,437","1,176",61,35,191,80
+2003,915,465,"3,405","1,231",62,38,185,84
+2004,926,463,"3,218","1,220",64,42,170,75
+2005,929,471,"3,145","1,244",65,45,156,76
+2006,943,487,"3,042","1,261",68,48,148,81
+2007,955,481,"3,138","1,259",69,50,150,79
+2008,952,487,"3,161","1,200",68,50,149,75
+2009,949,487,"3,119","1,193",67,50,142,74
+2010/c,943,459,"3,074","1,258",67,47,133,77
+"Note: Counts based on prisoners with a sentence of more than 1 year. Rates are per 100,000 U.S. residents as of January 1 in each reference population group. All estimates include persons under age 18. See Methodology for estimation method.",,,,,,,,
+"a/Includes American Indians, Alaska Natives, Asians, Native Hawaiians, other Pacific Islanders, and persons identifying as two or more races.",,,,,,,,
+b/Excludes persons of Hispanic or Latino origin.,,,,,,,,
+c/Data source used to estimate race and Hispanic origin changed in 2010. Use caution when comparing to prior years. See Methodology for estimation method.,,,,,,,,
+"Sources: BJS, National Prisoner Statistics Program, Federal Justice Statistics Program, National Corrections Reporting Program, Survey of Inmates in State and Local Correctional Facilities, National Inmate Survey, and unpublished U.S. Census Bureau January 1 population estimates.",,,,,,,,
