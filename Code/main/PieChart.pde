@@ -124,21 +124,6 @@ class PieChart {
     }
   }
   
-//  void detectCollision() {
-//    if (sq(mouseX - xCenter) + sq(mouseY - yCenter) <= sq(diameter/2)) {
-//      float angleFromCenter = atan2(mouseY - yCenter,  mouseX - xCenter);
-//      if (angleFromCenter < 0) {
-//        angleFromCenter = PI + ( PI + angleFromCenter); 
-//      }
-//      // TODO implement searching each region to see if this angle fits in the regions
-//      for (int i = 0; i < angularRegions.length; i++) {
-//        if (angleFromCenter >= angularRegions[i].begin && angleFromCenter <= angularRegions[i].end) {
-//          System.out.println("Currently hovering over " + races[i]);
-//        } 
-//      }
-//    }
-//  }
-  
   void onClick(int x, int y) {
     // if the person clicks in the text box, get rid of it
     // and do nothing else
@@ -151,11 +136,14 @@ class PieChart {
     
     // check if the person clicked in the pie
     // and set the text box correctly if they did
+    int previousIndex = raceIndexDisplayed;
     raceIndexDisplayed = clickedInPie(x, y);
     if (raceIndexDisplayed != -1) {
       textBoxDisplayed = true;
       textDisplayX = x;
       textDisplayY = y;
+    } else {
+      raceIndexDisplayed = previousIndex;
     }
   }
   
