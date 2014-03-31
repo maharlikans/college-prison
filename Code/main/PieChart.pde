@@ -12,7 +12,7 @@ class PieChart {
   Region[] angularRegions;
   
   // data for the little text box popup display
-  boolean dataDisplayed;
+  boolean textBoxDisplayed;
   int currentYearDisplayed;
   int raceIndexDisplayed;
   float textDisplayX;
@@ -111,7 +111,7 @@ class PieChart {
     }
     
     // display the text display
-    if (dataDisplayed) {
+    if (textBoxDisplayed) {
       String toDisplay = "Total: " + record[0] + "\n"
                        + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1];
       fill(200, 80);
@@ -140,10 +140,29 @@ class PieChart {
 //  }
   
   void onClick(int x, int y) {
+    // if the person clicks in the text box, get rid of it
+    // and do nothing else
+    if (textBoxDisplayed) {
+      if (clickedInTextBox(x, y)) {
+        textBoxDisplayed = false;
+        return;
+      }
+    }
     
-    // first check to see if there's a box up
-    // if so, then if the person clicked in the box, get rid of it
-    // otherwise, if the person didn't click in the box... do all the following below...
+    // check if the person clicked in the pie
+    // and set the text box correctly if they did
+    raceIndexDisplayed = clickedInPie(x, y);
+    if (raceIndexDisplayed != -1) {
+      textBoxDisplayed = true;
+      textDisplayX = x;
+      textDisplayY = y;
+    }
+  }
+  
+  // check if person clicks within the pie chart, and return the index of the race
+  // they clicked on if they did
+  int clickedInPie(int x, int y) {
+    int index = -1;
     if (sq(x - xCenter) + sq(y - yCenter) <= sq(diameter/2)) {
       float angleFromCenter = atan2(y - yCenter,  x - xCenter);
       
@@ -156,17 +175,14 @@ class PieChart {
       // race which they'd like to see data for 
       for (int i = 0; i < angularRegions.length; i++) {
         if (angleFromCenter >= angularRegions[i].begin && angleFromCenter <= angularRegions[i].end) {
-          dataDisplayed = true;
-          textDisplayX = x;
-          textDisplayY = y;
-          raceIndexDisplayed = i;
+          index = i;
         }
       }
     }
-    
-    // TODO if you click in a box then get rid of the box
+    return index;
   }
   
+  // simply check if a person clicked within the text box if it is being displayed
   boolean clickedInTextBox(int x, int y) {
     if (x >= textDisplayX && x <= textDisplayX + textDisplayWidth) {
       if (y >= textDisplayY && y <= textDisplayY + textDisplayHeight) {
