@@ -9,12 +9,26 @@ class PieChart {
   float xCenter;
   float yCenter;
   float diameter;
+  Region[] angularRegions;
+  
+  // data for the little text box popup display
+  boolean dataDisplayed;
+  int currentYearDisplayed;
+  int raceIndexDisplayed;
+  float textDisplayX;
+  float textDisplayY;
+  float textDisplayWidth;
+  float textDisplayHeight;
+  int[] record;
 
   public PieChart(String title, float x, float y, float diameter) {
     this.title = title;
     xCenter = x;
     yCenter = y;
     this.diameter = diameter;
+    
+    textDisplayWidth = 100;
+    textDisplayHeight = 100;
   }
 
   void initializeData(String csvFile) {
@@ -54,13 +68,16 @@ class PieChart {
   }
 
   void display(int year, HashMap<String, Color> racesToColors) {
+    
+    currentYearDisplayed = year;
+    
     // make the title of the chart
     textFont(createFont("Georgia", 20));
     fill(128);
     textAlign(CENTER, CENTER);
     text(title, xCenter, yCenter - yCenter/2);
     
-    int[] record = records.get(year);
+    record = records.get(year);
     if (record == null) {
       // a record wasn't found for this year, so draw the closest pie chart available...
       for (int i = 1; ; i++) {
@@ -78,6 +95,7 @@ class PieChart {
     // generate the angles based on 360 degrees and percentages
     int totalPopulation = record[0];
     float[] angles = new float[races.length];
+    angularRegions = new Region[races.length];
 
     for(int i = 1; i <= angles.length; i++) {
       angles[i-1] = 360*(((float)record[i])/(float)totalPopulation);
@@ -88,8 +106,74 @@ class PieChart {
     for (int i = 0; i < angles.length; i++) {
      fill(racesToColors.get(races[i]).aColor);
      arc(xCenter, yCenter, diameter, diameter, lastAngle, lastAngle+radians(angles[i]));
+     angularRegions[i] = new Region(lastAngle, lastAngle+radians(angles[i]));
      lastAngle += radians(angles[i]);
     }
+    
+    // display the text display
+    if (dataDisplayed) {
+      String toDisplay = "Total: " + record[0] + "\n"
+                       + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1];
+      fill(200, 80);
+      rectMode(CORNER);
+      rect(textDisplayX, textDisplayY, textDisplayWidth, textDisplayHeight);
+      
+      fill(0);
+      textFont(createFont("Arial", 10, true), 10);
+      text(toDisplay, textDisplayX + textDisplayWidth/2, textDisplayY + textDisplayHeight/2);
+    }
+  }
+  
+//  void detectCollision() {
+//    if (sq(mouseX - xCenter) + sq(mouseY - yCenter) <= sq(diameter/2)) {
+//      float angleFromCenter = atan2(mouseY - yCenter,  mouseX - xCenter);
+//      if (angleFromCenter < 0) {
+//        angleFromCenter = PI + ( PI + angleFromCenter); 
+//      }
+//      // TODO implement searching each region to see if this angle fits in the regions
+//      for (int i = 0; i < angularRegions.length; i++) {
+//        if (angleFromCenter >= angularRegions[i].begin && angleFromCenter <= angularRegions[i].end) {
+//          System.out.println("Currently hovering over " + races[i]);
+//        } 
+//      }
+//    }
+//  }
+  
+  void onClick(int x, int y) {
+    
+    // first check to see if there's a box up
+    // if so, then if the person clicked in the box, get rid of it
+    // otherwise, if the person didn't click in the box... do all the following below...
+    if (sq(x - xCenter) + sq(y - yCenter) <= sq(diameter/2)) {
+      float angleFromCenter = atan2(y - yCenter,  x - xCenter);
+      
+      // negative angles must be adjusted for
+      if (angleFromCenter < 0) {
+        angleFromCenter = PI + ( PI + angleFromCenter); 
+      }
+      
+      // search for the region in which they clicked, corresponding to the
+      // race which they'd like to see data for 
+      for (int i = 0; i < angularRegions.length; i++) {
+        if (angleFromCenter >= angularRegions[i].begin && angleFromCenter <= angularRegions[i].end) {
+          dataDisplayed = true;
+          textDisplayX = x;
+          textDisplayY = y;
+          raceIndexDisplayed = i;
+        }
+      }
+    }
+    
+    // TODO if you click in a box then get rid of the box
+  }
+  
+  boolean clickedInTextBox(int x, int y) {
+    if (x >= textDisplayX && x <= textDisplayX + textDisplayWidth) {
+      if (y >= textDisplayY && y <= textDisplayY + textDisplayHeight) {
+        return true; 
+      }
+    }
+    return false;
   }
 }
 

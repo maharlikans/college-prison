@@ -95,7 +95,6 @@ void draw () {
   collegePie.display(year, racesToColors);
   prisonPie.display(year, racesToColors);
   americanPie.display(year, racesToColors);
-  
 }
 
 /* HELPER FUNCTIONS */
@@ -148,4 +147,10 @@ void determineColors() {
   for (int i = 0; i < races.length; i++) {
     racesToColors.put(races[i], new Color(colors[i]));
   } 
+}
+
+void mouseClicked() {
+  collegePie.onClick(mouseX, mouseY);
+  prisonPie.onClick(mouseX, mouseY);
+  americanPie.onClick(mouseX, mouseY);
 }
