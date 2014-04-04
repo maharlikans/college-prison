@@ -120,11 +120,11 @@ class PieChart {
       textFont(createFont("MyriadPro-Regular", 20, true));
       textDisplayWidth = textWidth(toDisplay);
       textDisplayHeight = 4*(textAscent() + textDescent());
-      fill(200, 150);
+      fill(racesToColors.get(races[raceIndexDisplayed]).aColor);
       rectMode(CENTER);
       rect(textDisplayX, textDisplayY, textDisplayWidth + 20, textDisplayHeight + 20, 7);
       
-      fill(0);
+      fill(255);
       textAlign(CENTER, CENTER);
       text(toDisplay, textDisplayX, textDisplayY);
     }
