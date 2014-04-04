@@ -27,8 +27,8 @@ class PieChart {
     yCenter = y;
     this.diameter = diameter;
     
-    textDisplayWidth = 100;
-    textDisplayHeight = 100;
+//    textDisplayWidth = 100;
+//    textDisplayHeight = 100;
   }
 
   void initializeData(String csvFile) {
@@ -72,8 +72,8 @@ class PieChart {
     currentYearDisplayed = year;
     
     // make the title of the chart
-    textFont(createFont("Georgia", 20));
-    fill(128);
+    textFont(createFont("MyriadPro-Bold", 20));
+    fill(225);
     textAlign(CENTER, CENTER);
     text(title, xCenter, yCenter - yCenter/2);
     
@@ -112,15 +112,21 @@ class PieChart {
     
     // display the text display
     if (textBoxDisplayed) {
+      float d = 100*((float)record[raceIndexDisplayed+1]/record[0]);
       String toDisplay = "Total: " + record[0] + "\n"
-                       + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1];
-      fill(200, 80);
-      rectMode(CORNER);
-      rect(textDisplayX, textDisplayY, textDisplayWidth, textDisplayHeight);
+                       + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1] + "\n"
+                       + "percentage: " + nf(d, 2, 2) + "%";
+                       
+      textFont(createFont("MyriadPro-Regular", 20, true));
+      textDisplayWidth = textWidth(toDisplay);
+      textDisplayHeight = 4*(textAscent() + textDescent());
+      fill(200, 150);
+      rectMode(CENTER);
+      rect(textDisplayX, textDisplayY, textDisplayWidth + 20, textDisplayHeight + 20, 7);
       
       fill(0);
-      textFont(createFont("Arial", 10, true), 10);
-      text(toDisplay, textDisplayX + textDisplayWidth/2, textDisplayY + textDisplayHeight/2);
+      textAlign(CENTER, CENTER);
+      text(toDisplay, textDisplayX, textDisplayY);
     }
   }
   
@@ -140,8 +146,8 @@ class PieChart {
     raceIndexDisplayed = clickedInPie(x, y);
     if (raceIndexDisplayed != -1) {
       textBoxDisplayed = true;
-      textDisplayX = x;
-      textDisplayY = y;
+      textDisplayX = xCenter;
+      textDisplayY = yCenter + yCenter/2;
     } else {
       raceIndexDisplayed = previousIndex;
     }
@@ -172,8 +178,8 @@ class PieChart {
   
   // simply check if a person clicked within the text box if it is being displayed
   boolean clickedInTextBox(int x, int y) {
-    if (x >= textDisplayX && x <= textDisplayX + textDisplayWidth) {
-      if (y >= textDisplayY && y <= textDisplayY + textDisplayHeight) {
+    if (x >= textDisplayX - textDisplayWidth/2 && x <= textDisplayX + textDisplayWidth/2) {
+      if (y >= textDisplayY - textDisplayHeight/2 && y <= textDisplayY + textDisplayHeight/2) {
         return true; 
       }
     }

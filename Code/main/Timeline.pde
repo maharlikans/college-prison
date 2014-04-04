@@ -34,7 +34,7 @@ class Timeline {
       regions[i] = currentRegion;
       currentXToDrawYear = newXToDrawYear;
       above = !above;
-    } 
+    }
   }
   
   void display() {

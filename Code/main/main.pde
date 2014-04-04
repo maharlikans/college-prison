@@ -23,7 +23,7 @@ float timelineXBegin, timelineYBegin, timelineXWidth;
 
 void setup () {
   size(1024,768);
-  background(255);
+  background(38);
   
   circleDiameter = width/5;
   
@@ -84,9 +84,7 @@ void setup () {
 
 void draw () {
   rectMode(CORNER);
-  background(255);
-  
-  
+  background(38);
   
   timeline.display();
   year = timeline.getCurrentYear();
@@ -101,35 +99,51 @@ void draw () {
 
 void printTitles() {
   // print main title
-  textFont(createFont("Georgia", 30));
-  fill(0);
+  textFont(createFont("MyriadPro-Bold", 30));
+  fill(225);
   textAlign(CENTER, CENTER);
   text("Racial Demographics of Prisons vs. Colleges", width/2, height/8);
 }
 
 void printLegend() {
-  // set up the legend at left 
-  rectMode(CENTER);
-  float legendWidth = width/8;
-  float legendHeight = height/2;
-  float legendStart = height/5;
-  float legendCenter = width/8;
-  fill(235);
-  rect(width/8, height/2, legendWidth, legendHeight, 7);
-  
-  textFont(createFont("Bold Arial", 15));
+
+  float totalLegendHeight = height/2,
+        legendYStart = height/4,
+        legendWidth = width/8,
+        legendCenter = width/8,
+        heightBox = totalLegendHeight/races.length,
+        currentBoxY = legendYStart + heightBox/2;
+        
+  textFont(createFont("MyriadPro-Bold", 15));
   textAlign(CENTER, CENTER); // restated for clarity
+        
+  rectMode(CENTER);
+  fill(racesToColors.get(races[0]).aColor);
+  rect(legendCenter, currentBoxY, legendWidth, heightBox, 6, 6, 0, 0);
+  fill(255);
+  text(races[0], legendCenter, currentBoxY);
   
-  // print the text in the legend
-  for(int i = 1; i <= races.length; i++) {
-    fill(racesToColors.get(races[i-1]).aColor);
-    text(races[i-1], legendCenter, legendStart + i*legendHeight/races.length);
+  for (int i = 1; i < races.length - 1; i++) {
+    currentBoxY += heightBox;
+    rectMode(CENTER);
+    fill(racesToColors.get(races[i]).aColor);
+    rect(legendCenter, currentBoxY, legendWidth, heightBox);
+    fill(255);
+    text(races[i], legendCenter, currentBoxY);
   }
+  
+  currentBoxY += heightBox;
+  rectMode(CENTER);
+  fill(racesToColors.get(races[races.length-1]).aColor);
+  rect(legendCenter, currentBoxY, legendWidth, heightBox, 0, 0, 6, 6);
+  fill(255);
+  text(races[races.length-1], legendCenter, currentBoxY);
+  
 }
 
 void determineColors() {
   // possible colors to use for the races
-  color[] colors = {color(255, 0, 0), color(0, 0, 255), color(0, 255, 0), color(255, 255, 0), color(255, 0, 255), color(0, 255, 255)};
+  color[] colors = {color(8, 139, 156), color(44, 166, 8), color(143, 108, 0), color(166, 34, 8), color(99, 17, 156), color(0, 255, 255)};
 
   // Determine which races to display
   // if one set of headers is longer than another, it has more racial categories in it
