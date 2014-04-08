@@ -113,7 +113,7 @@ class PieChart {
     // display the text display
     if (textBoxDisplayed) {
       float d = 100*((float)record[raceIndexDisplayed+1]/record[0]);
-      String toDisplay = "Total: " + record[0] + "\n"
+      String toDisplay = "total: " + record[0] + "\n"
                        + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1] + "\n"
                        + "percentage: " + nf(d, 2, 2) + "%";
                        
@@ -170,6 +170,7 @@ class PieChart {
       for (int i = 0; i < angularRegions.length; i++) {
         if (angleFromCenter >= angularRegions[i].begin && angleFromCenter <= angularRegions[i].end) {
           index = i;
+          return index;
         }
       }
     }

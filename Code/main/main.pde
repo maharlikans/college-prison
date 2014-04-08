@@ -20,6 +20,7 @@ Region[] regions;
 int year;
 float circleDiameter;
 float timelineXBegin, timelineYBegin, timelineXWidth;
+PausePlayButton pauseplay;
 
 void setup () {
   size(1024,768);
@@ -71,6 +72,9 @@ void setup () {
 
   timeline = new Timeline(timelineXBegin, timelineYBegin, timelineXWidth, timelineXHeight, years);
   
+  // hardcoded here...
+  pauseplay = new PausePlayButton(50.0, timelineXBegin - 50, timelineYBegin);
+  
   // display all elements
   printTitles();
   determineColors();
@@ -79,6 +83,7 @@ void setup () {
   prisonPie.display(year, racesToColors);
   americanPie.display(year, racesToColors);
   timeline.display();
+  pauseplay.display();
 }
 
 
@@ -86,6 +91,8 @@ void draw () {
   rectMode(CORNER);
   background(38);
   
+  pauseplay.display();
+  timeline.setPause(pauseplay.isPaused());
   timeline.display();
   year = timeline.getCurrentYear();
   printTitles();
@@ -93,6 +100,7 @@ void draw () {
   collegePie.display(year, racesToColors);
   prisonPie.display(year, racesToColors);
   americanPie.display(year, racesToColors);
+  
 }
 
 /* HELPER FUNCTIONS */
@@ -167,4 +175,5 @@ void mouseClicked() {
   collegePie.onClick(mouseX, mouseY);
   prisonPie.onClick(mouseX, mouseY);
   americanPie.onClick(mouseX, mouseY);
+  pauseplay.onClick(mouseX, mouseY);
 }

@@ -10,6 +10,7 @@ class HScrollbar {
   boolean over;           // is the mouse over the slider?
   boolean locked;
   float ratio;
+  float slideSpeed = .20;
 
   HScrollbar (float xp, float yp, int sw, int sh, int l) {
     swidth = sw;
@@ -79,8 +80,8 @@ class HScrollbar {
   
   void slowSlide() {
     if (spos <= sposMax) {
-      spos += .10;
-      newspos += .10;
+      spos += slideSpeed;
+      newspos += slideSpeed;
     }
   }
 }

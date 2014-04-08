@@ -6,6 +6,7 @@ class Timeline {
   int year;
   HashMap<Region, Integer> regionToYear;
   Region[] regions;
+  boolean paused;
   
   Timeline(float timelineXBegin, float timelineYBegin, float timelineXWidth, float timelineXHeight, 
            ArrayList<Integer> years) {
@@ -38,7 +39,8 @@ class Timeline {
   }
   
   void display() {
-    scroller.slowSlide();
+    if(!paused)
+      scroller.slowSlide();
     scroller.update();
     scroller.display();
     
@@ -56,7 +58,10 @@ class Timeline {
     for(int i = 0; i < years.size(); i++) {
       textFont(createFont("Sans Serif", 10));
       textAlign(CENTER, CENTER); // restated for clarity
-      fill(128);
+      if (years.get(i) == year) 
+        fill(255, 0, 0);
+      else 
+        fill(128);
       text(String.valueOf(years.get(i)), currentXToDrawYear, above ? timelineYBegin - 20 : timelineYBegin + 15);
       above = !above;
       currentXToDrawYear += (timelineXWidth/(years.size()-1));
@@ -65,6 +70,10 @@ class Timeline {
   
   int getCurrentYear() {
     return year;
+  }
+  
+  void setPause(boolean paused) {
+    this.paused = paused;
   }
 }
 
