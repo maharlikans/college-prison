@@ -38,7 +38,8 @@ class PlayButton implements ControlButton {
   }
   
   void display() {
-    fill(255);
+    fill(204);
+    noStroke();
     if (hover(mouseX, mouseY)) {
       fill(0);
     }

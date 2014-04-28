@@ -18,10 +18,11 @@ class PauseButton implements ControlButton {
   
   void display() {
     rectMode(CENTER);
+    noStroke();
     if (hover(mouseX, mouseY))
       fill(0);
     else
-      fill(255);
+      fill(204);
     rect(xCenter - xDiff, yCenter, rectWidth, rectHeight);
     rect(xCenter + xDiff, yCenter, rectWidth, rectHeight);
   }

@@ -105,9 +105,17 @@ class PieChart {
     float lastAngle = 0;
     for (int i = 0; i < angles.length; i++) {
      fill(racesToColors.get(races[i]).aColor);
-     arc(xCenter, yCenter, diameter, diameter, lastAngle, lastAngle+radians(angles[i]));
+     stroke(220);
+     arc(xCenter, yCenter, diameter, diameter, lastAngle, lastAngle+radians(angles[i]), PIE);
      angularRegions[i] = new Region(lastAngle, lastAngle+radians(angles[i]));
      lastAngle += radians(angles[i]);
+    }
+    
+    int indexToDarken = hover(mouseX, mouseY);
+    if (indexToDarken != -1) {
+     fill(220);
+     stroke(220);
+     arc(xCenter, yCenter, diameter, diameter, angularRegions[indexToDarken].begin, angularRegions[indexToDarken].end, PIE);
     }
     
     // display the text display
@@ -117,7 +125,7 @@ class PieChart {
                        + races[raceIndexDisplayed] + ": " + record[raceIndexDisplayed+1] + "\n"
                        + "percentage: " + nf(d, 2, 2) + "%";
                        
-      textFont(createFont("MyriadPro-Regular", 20, true));
+      textFont(createFont("MyriadPro-Regular", 15, true));
       textDisplayWidth = textWidth(toDisplay);
       textDisplayHeight = 4*(textAscent() + textDescent());
       fill(racesToColors.get(races[raceIndexDisplayed]).aColor);
@@ -125,6 +133,7 @@ class PieChart {
       rect(textDisplayX, textDisplayY, textDisplayWidth + 20, textDisplayHeight + 20, 7);
       
       fill(255);
+      stroke(220);
       textAlign(CENTER, CENTER);
       text(toDisplay, textDisplayX, textDisplayY);
     }
@@ -143,7 +152,7 @@ class PieChart {
     // check if the person clicked in the pie
     // and set the text box correctly if they did
     int previousIndex = raceIndexDisplayed;
-    raceIndexDisplayed = clickedInPie(x, y);
+    raceIndexDisplayed = hover(x, y);
     if (raceIndexDisplayed != -1) {
       textBoxDisplayed = true;
       textDisplayX = xCenter;
@@ -153,9 +162,18 @@ class PieChart {
     }
   }
   
-  // check if person clicks within the pie chart, and return the index of the race
-  // they clicked on if they did
-  int clickedInPie(int x, int y) {
+  // simply check if a person clicked within the text box if it is being displayed
+  boolean clickedInTextBox(int x, int y) {
+    if (x >= textDisplayX - textDisplayWidth/2 && x <= textDisplayX + textDisplayWidth/2) {
+      if (y >= textDisplayY - textDisplayHeight/2 && y <= textDisplayY + textDisplayHeight/2) {
+        return true; 
+      }
+    }
+    return false;
+  }
+  
+  // returns the region the user is currently hovering over
+  int hover(int x, int y) {
     int index = -1;
     if (sq(x - xCenter) + sq(y - yCenter) <= sq(diameter/2)) {
       float angleFromCenter = atan2(y - yCenter,  x - xCenter);
@@ -175,16 +193,6 @@ class PieChart {
       }
     }
     return index;
-  }
-  
-  // simply check if a person clicked within the text box if it is being displayed
-  boolean clickedInTextBox(int x, int y) {
-    if (x >= textDisplayX - textDisplayWidth/2 && x <= textDisplayX + textDisplayWidth/2) {
-      if (y >= textDisplayY - textDisplayHeight/2 && y <= textDisplayY + textDisplayHeight/2) {
-        return true; 
-      }
-    }
-    return false;
   }
 }
 

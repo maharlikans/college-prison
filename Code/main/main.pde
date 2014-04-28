@@ -23,7 +23,7 @@ float timelineXBegin, timelineYBegin, timelineXWidth;
 PausePlayButton pauseplay;
 
 void setup () {
-  size(1024,768);
+  size(800,600);
   background(38);
   
   circleDiameter = width/5;
@@ -127,6 +127,7 @@ void printLegend() {
         
   rectMode(CENTER);
   fill(racesToColors.get(races[0]).aColor);
+  stroke(220);
   rect(legendCenter, currentBoxY, legendWidth, heightBox, 6, 6, 0, 0);
   fill(255);
   text(races[0], legendCenter, currentBoxY);
@@ -135,6 +136,7 @@ void printLegend() {
     currentBoxY += heightBox;
     rectMode(CENTER);
     fill(racesToColors.get(races[i]).aColor);
+    stroke(220);
     rect(legendCenter, currentBoxY, legendWidth, heightBox);
     fill(255);
     text(races[i], legendCenter, currentBoxY);

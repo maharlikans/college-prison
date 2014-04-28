@@ -10,7 +10,8 @@ class PausePlayButton {
   PausePlayButton(float size, float xCenter, float yCenter) {
     pause = new PauseButton(size, xCenter, yCenter);
     play = new PlayButton(size, xCenter, yCenter);
-    current = pause;
+    current = play;
+    play.init();
     paused = true;
   }
   
